@@ -35,35 +35,39 @@ const setup = () => {
   userEvent.click(app.getByText('Add Recipe'));
 
   const submitButton = app.getByRole('button')
-  const instructionsInput = app.getByLabelText('Instructions:')
-  const nameInput = app.getByLabelText('Recipe name:')
+  const instructionsInput1 = app.getByLabelText('Instructions:')
+  const instructionsInput2 = app.getByLabelText('Instructions:')
+  const nameInput1 = app.getByLabelText('Recipe name:')
+  const nameInput2 = app.getByLabelText('Recipe name:')
   return {
-    instructionsInput,
-    nameInput,
+    instructionsInput1,
+    instructionsInput2,
+    nameInput1,
+    nameInput2,
     submitButton
   }
 }
 
 test('typing in the recipe instructions makes the instructions appear in the form', async () => {
-  const {instructionsInput} = setup();
+  const {instructionsInput1} = setup();
 
   const recipeInstructions = "kinda hard to write instructions without knowing what I'm cooking"
 
-  await userEvent.type(instructionsInput, recipeInstructions)
-  expect(instructionsInput.value).toEqual(recipeInstructions);
+  await userEvent.type(instructionsInput1, recipeInstructions)
+  expect(instructionsInput1.value).toEqual(recipeInstructions);
 })
 
 test('recipe name from state appears in an unordered list', async () => {
-  const {instructionsInput, nameInput, submitButton} = setup();
-  const recipeName = "Lean Pockets"
-  const recipeInstructions = "place in toaster oven on 350 for 45 minutes"
+  const {instructionsInput1, nameInput1, submitButton} = setup();
+  const recipeName1 = "Lean Pockets"
+  const recipeInstructions1 = "place in toaster oven on 350 for 45 minutes"
 
-  await userEvent.type(instructionsInput, recipeInstructions)
-  await userEvent.type(nameInput, recipeName)
+  await userEvent.type(instructionsInput1, recipeInstructions1)
+  await userEvent.type(nameInput1, recipeName1)
   userEvent.click(submitButton);
 
   expect(screen.getByRole('listitem')).toBeInTheDocument();
-  expect(screen.getByText(recipeName)).toBeInTheDocument();
+  expect(screen.getByText(recipeName1)).toBeInTheDocument();
 })
 
 test('multiple recipes will be displayed once they are added', async () => {
