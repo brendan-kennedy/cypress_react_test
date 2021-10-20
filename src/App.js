@@ -9,6 +9,8 @@ class App extends React.Component {
     newRecipeInstructions: ""
   }
 
+
+
 handleChange = (event) => {
   const target = event.target
   const name = target.name
@@ -19,7 +21,7 @@ handleChange = (event) => {
 
 submitRecipe = (event) => {
   event.preventDefault()
-  this.setState({recipes: [
+  this.setState({...this.state.recipes, recipes: [
       {
         name: this.state.newRecipeName,
         instructions :this.state.newRecipeInstructions
@@ -30,6 +32,11 @@ submitRecipe = (event) => {
 
   toggleAddRecipeForm = () => {
     this.setState({isAddRecipeFormDisplayed: !this.state.isAddRecipeFormDisplayed})
+  }
+
+  recipeList = (props) => { 
+    props.map((recipe) => (<li>{recipe.name}</li>))
+
   }
 
   render(){
@@ -62,8 +69,7 @@ submitRecipe = (event) => {
         {
         this.state.recipes.length > 0 ?
         <ul>
-          <li>{ this.state.recipes[0].name }</li>
-          <li>{ this.state.recipes[1].name }</li>
+          {this.recipeList(this.state.recipes)}
         </ul> :
         <p>There are no recipes to list.</p>
         }
